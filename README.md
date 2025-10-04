@@ -1,7 +1,8 @@
 # TP-03
 Créer un programme en C capable de manipuler des images
 
-'''
+## Structure du projet
+```
 ppmviewer/
 ├── src/
 │   ├── main.c
@@ -15,4 +16,4 @@ ppmviewer/
 │   ├── test1.ppm
 │   ├── test2.ppm
 ├── README.md
-'''
+```
