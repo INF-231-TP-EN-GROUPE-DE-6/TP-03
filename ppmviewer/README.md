@@ -7,7 +7,7 @@ ppmviewer/
 ├── src/
 │   ├── main.c
 │   ├── ppm.h
-│   ├── io.h
+│   ├── io.c
 │   ├── utils.c
 │   ├── dom.c 
 │   ├── gris.c
