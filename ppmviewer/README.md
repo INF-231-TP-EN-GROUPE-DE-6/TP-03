@@ -21,4 +21,5 @@ ppmviewer/
 │   ├── fil.c
 │   ├── ppmviewer.exe
 ├── README.md
+├── LICENSE
 ```
