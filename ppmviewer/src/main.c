@@ -1,127 +1,119 @@
 #include <stdio.h>
+#include <string.h>
 #include "ppm.h"
+#include "operations.h"
 
-// ==================== MENU INTERACTIF ====================
-void afficher_menu() {
-    printf("\n========================================\n");
-    printf(" APPLICATION PPM VIEWER\n");
-    printf("========================================\n");
-    printf("Commandes disponibles :\n\n");
-    printf(" 1. dom <couleur> <valeur> <fichier.ppm>\n");
-    printf(" Foncer/éclaircir les pixels dominants\n");
-    printf(" Couleur : R, G ou B\n");
-    printf(" Valeur : positive (foncer) ou négative (éclaircir)\n\n");
-    printf(" 2. gris <fichier.ppm>\n");
-    printf(" Convertir en niveaux de gris\n\n");
-    printf(" 3. neg <fichier_entree.ppm> <fichier_sortie.ppm>\n");
-    printf(" Créer le négatif de l'image\n\n");
-    printf(" 4. size <fichier.ppm>\n");
-    printf(" Afficher la taille de l'image\n\n");
-    printf(" 5. cut <fichier.ppm> <l1> <l2> <c1> <c2> <fichier_sortie.ppm>\n");
-    printf(" Découper une partie de l'image\n\n");
-    printf(" 6. fil <fichier_entree.ppm> <fichier_sortie.ppm>\n");
-    printf(" Appliquer le filtre médian\n\n");
-    printf(" help - Afficher ce menu\n");
-    printf(" quit - Quitter l'application\n");
-    printf("========================================\n\n");
+// Affiche le menu d’aide
+void afficherMenu() {
+    printf("\n===================MENU DES COMMANDES ========================================\n");
+    printf("size <fichier.ppm>                : Affiche la taille de l'image (largeur x hauteur)\n");
+    printf("gris <fichier.ppm> <sortie.ppm>   : Convertit l'image en niveaux de gris et crée <fichier.ppm_gris.ppm>\n");
+    printf("neg <entrée.ppm> <sortie.ppm>     : Crée le négatif de l'image\n");
+    printf("dom <R|G|B> <val> <fichier.ppm>   : Fonce ou éclaircit les pixels dominants dans une couleur\n");
+    printf("cut <entrée.ppm> <l1> <l2> <c1> <c2> <sortie.ppm> : Découpe une partie de l'image\n");
+    printf("fil <entrée.ppm> <sortie.ppm>     : Applique un filtre médian (lisse l'image)\n");
+    printf("menu                              : Affiche ce menu d'aide\n");
+    printf("quit                              : Quitte le programme\n");
+    printf("============================================================================\n\n");
 }
 
-// ==================== MAIN ====================
 int main() {
-    char commande[512];
-    char cmd[20];
-    printf("\n====================================================\n");
+   printf("\n====================================================\n");
     printf("|| Application de traitement d'images PPM ║\n");
     printf("||======================================================\n");
-    printf("\nTapez 'help' pour voir les commandes disponibles\n");
+    printf("\nTapez 'menu' pour voir les commandes disponibles\n");
+
+    char cmd[50];
     while (1) {
-        printf("\nppmviewer> ");
-        if (fgets(commande, sizeof(commande), stdin) == NULL) {
+        printf("ppmviewer > ");
+        scanf("%s", cmd);
+
+        if (strcmp(cmd, "quit") == 0)
             break;
-        }
-        // Supprimer le retour à la ligne
-        commande[strcspn(commande, "\n")] = 0;
-        // Ignorer les lignes vides
-        if (strlen(commande) == 0) {
-            continue;
-        }
-        // Analyser la commande
-        sscanf(commande, "%s", cmd);
-        // QUIT
-        if (strcmp(cmd, "quit") == 0) {
-            printf("\nMerci d'avoir utilisé PPM Viewer. Au revoir !\n\n");
-            break;
-        }
-        // HELP
-        else if (strcmp(cmd, "help") == 0) {
-            afficher_menu();
-        }
-        // DOM - Dominante
-        else if (strcmp(cmd, "dom") == 0) {
-            char couleur, fichier[256];
-            int valeur;
-            if (sscanf(commande, "%s %c %d %s", cmd, &couleur, &valeur, fichier) == 4) {
-                couleur = toupper(couleur);
-                if (couleur == 'R' || couleur == 'G' || couleur == 'B') {
-                    operation_dominante(fichier, couleur, valeur);
-                } else {
-                    printf("Erreur : la couleur doit être R, G ou B\n");
-                }
-            } else {
-                printf("Usage : dom <couleur> <valeur> <fichier.ppm>\n");
-            }
-        }
-        // GRIS - Niveaux de gris
-        else if (strcmp(cmd, "gris") == 0) {
-            char fichier[256];
-            if (sscanf(commande, "%s %s", cmd, fichier) == 2) {
-                operation_gris(fichier);
-            } else {
-                printf("Usage : gris <fichier.ppm>\n");
-            }
-        }
-        // NEG - Négatif
-        else if (strcmp(cmd, "neg") == 0) {
-            char fichier_entree[256], fichier_sortie[256];
-            if (sscanf(commande, "%s %s %s", cmd, fichier_entree, fichier_sortie) == 3) {
-                operation_negatif(fichier_entree, fichier_sortie);
-            } else {
-                printf("Usage : neg <fichier_entree.ppm> <fichier_sortie.ppm>\n");
-            }
-        }
-        // SIZE - Taille
+
+        else if (strcmp(cmd, "menu") == 0)
+            afficherMenu();
+
         else if (strcmp(cmd, "size") == 0) {
-            char fichier[256];
-            if (sscanf(commande, "%s %s", cmd, fichier) == 2) {
-                operation_taille(fichier);
-            } else {
-                printf("Usage : size <fichier.ppm>\n");
+            char fichier[100];
+            scanf("%s", fichier);
+            Image *img = lirePPM(fichier);
+            if (img) {
+                afficherTaille(img);
+                libererImage(img);
             }
         }
-        // CUT - Découper
+
+        else if (strcmp(cmd, "gris") == 0) {
+            char in[100], out[100];
+            scanf("%s %s", in, out);
+            Image *img = lirePPM(in);
+            if (img) {
+                toGray(img);
+                ecrirePPM(out, img);
+                printf("opération effectuée ; %s créé\n", out);
+                libererImage(img);
+            }
+        }
+
+        else if (strcmp(cmd, "neg") == 0) {
+            char in[100], out[100];
+            scanf("%s %s", in, out);
+            Image *img = lirePPM(in);
+            if (img) {
+                negatif(img);
+                ecrirePPM(out, img);
+                printf("opération effectuée\n");
+                libererImage(img);
+            }
+        }
+
+        else if (strcmp(cmd, "dom") == 0) {
+            char c; int val; char fichier[100];
+            scanf(" %c %d %s", &c, &val, fichier);
+            Image *img = lirePPM(fichier);
+            if (img) {
+                dominante(img, c, val);
+                char out[120];
+                sprintf(out, "%s_dom.ppm", fichier);
+                ecrirePPM(out, img);
+                printf("opération effectuée ; %s créé\n", out);
+                libererImage(img);
+            }
+        }
+
         else if (strcmp(cmd, "cut") == 0) {
-            char fichier_entree[256], fichier_sortie[256];
+            char in[100], out[100];
             int l1, l2, c1, c2;
-            if (sscanf(commande, "%s %s %d %d %d %d %s",
-                       cmd, fichier_entree, &l1, &l2, &c1, &c2, fichier_sortie) == 7) {
-                operation_decouper(fichier_entree, l1, l2, c1, c2, fichier_sortie);
-            } else {
-                printf("Usage : cut <fichier.ppm> <l1> <l2> <c1> <c2> <fichier_sortie.ppm>\n");
+            scanf("%s %d %d %d %d %s", in, &l1, &l2, &c1, &c2, out);
+            Image *img = lirePPM(in);
+            if (img) {
+                Image *part = decouper(img, l1, l2, c1, c2);
+                if (part) {
+                    ecrirePPM(out, part);
+                    printf("opération effectuée\n");
+                    libererImage(part);
+                }
+                libererImage(img);
             }
         }
-        // FIL - Filtre médian
+
         else if (strcmp(cmd, "fil") == 0) {
-            char fichier_entree[256], fichier_sortie[256];
-            if (sscanf(commande, "%s %s %s", cmd, fichier_entree, fichier_sortie) == 3) {
-                operation_filtre_median(fichier_entree, fichier_sortie);
-            } else {
-                printf("Usage : fil <fichier_entree.ppm> <fichier_sortie.ppm>\n");
+            char in[100], out[100];
+            scanf("%s %s", in, out);
+            Image *img = lirePPM(in);
+            if (img) {
+                filtreMedian(img);
+                ecrirePPM(out, img);
+                printf("opération effectuée\n");
+                libererImage(img);
             }
         }
-        // Commande inconnue
-        else {
-            printf("Commande inconnue : '%s'. Tapez 'help' pour voir les commandes.\n", cmd);
-        }
+
+        else
+            printf("Commande inconnue. Tapez 'menu' pour voir les commandes disponibles.\n");
     }
+
+    printf("Programme terminé.\n");
     return 0;
 }
