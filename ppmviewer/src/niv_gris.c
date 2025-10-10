@@ -106,7 +106,6 @@ void ecrirePPM(const char *nomFichier, Image *img)
         }
         fprintf(f, "\n");
     }
-
     fclose(f);
     printf(" Fichier %s créé avec succès.\n", nomFichier);
 }
