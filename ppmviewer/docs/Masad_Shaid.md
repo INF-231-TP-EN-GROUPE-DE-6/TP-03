@@ -1,4 +1,4 @@
-Rapport Personnel - MASAD SHAID 
+## Rapport Personnel - MASAD SHAID 
 
 Dans ce TP, la fonction de filtre médian (filtreMedian) a été implémentée dans src/fil.c. Elle applique un noyau 3x3 pour réduire le bruit "sel et poivre". La méthode utilisée consiste à : effectuer une copie de l'image avec decouper(...), parcourir chaque pixel (en excluant les bords), rassembler les 9 valeurs du voisinage pour chaque canal R, G, B, trier ces valeurs de façon simple et remplacer la valeur du pixel par la médiane. La copie est ensuite libérée avec libererImage(...).
 
