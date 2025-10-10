@@ -17,6 +17,5 @@ Limites identifiées :
 - Indices basés sur 0 ; l2 et c2 sont exclusifs dans la copie.
 - Nécessité pour l'appelant de libérer la sous-image pour éviter des fuites mémoires.
 
-Proposition d'amélioration :
-- Ajouter des vérifications des retours de malloc et gérer proprement les erreurs d'allocation.
-- Documenter clairement la convention d'indices (inclusif/exclusif) pour éviter les confusions.
+Utilisation : 
+- `cut <entrée.ppm> <l1> <l2> <c1> <c2> <sortie.ppm>`
