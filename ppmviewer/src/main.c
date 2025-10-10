@@ -3,6 +3,7 @@
 #include "ppm.h"
 #include "operations.h"
 
+// Affiche le menu d’aide
 void afficherMenu() {
     printf("\n===================MENU DES COMMANDES ========================================\n");
     printf("size <fichier.ppm>                : Affiche la taille de l'image (largeur x hauteur)\n");
@@ -13,7 +14,7 @@ void afficherMenu() {
     printf("fil <entrée.ppm> <sortie.ppm>     : Applique un filtre médian (lisse l'image)\n");
     printf("menu                              : Affiche ce menu d'aide\n");
     printf("quit                              : Quitte le programme\n");
-    printf("==============================================================================\n\n");
+    printf("============================================================================\n\n");
 }
 
 int main() {
