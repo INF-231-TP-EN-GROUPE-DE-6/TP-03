@@ -1,6 +1,6 @@
 ## Rapport Personnel - MONET YANKWA BELOVED BRYAN
 
-Dans ce TP, la fonction de découpage d'image (decouper) a été implémentée dans src/cut.c. Le rôle de la fonction est d'extraire une sous-image rectangulaire [l1..l2-1] x [c1..c2-1] depuis une image PPM source et de retourner une nouvelle Image allouée contenant uniquement cette zone.
+Dans ce TP, la fonction de découpage d'image (decouper) a été implémentée dans `src/cut.c`. Le rôle de la fonction est d'extraire une sous-image rectangulaire [l1..l2-1] x [c1..c2-1] depuis une image PPM source et de retourner une nouvelle Image allouée contenant uniquement cette zone.
 
 La méthode utilisée :
 - Validation des bornes d'entrée pour s'assurer qu'elles sont dans l'intervalle et correctement ordonnées. En cas d'erreur, la fonction signale "coordonnées invalides" et retourne NULL.
