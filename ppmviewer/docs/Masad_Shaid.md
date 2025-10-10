@@ -1,35 +1,18 @@
-# Rapport Personnel - MASAD SHAID
-## 1) Titre
-Filtre médian 3x3 pour réduire le bruit.
+Rapport Personnel - MASAD SHAID 
 
-## 2) Objectif
-Améliorer la qualité d'image en supprimant les pixels impulsionnels.
+Dans ce TP, la fonction de filtre médian (filtreMedian) a été implémentée dans src/fil.c. Elle applique un noyau 3x3 pour réduire le bruit "sel et poivre". La méthode utilisée consiste à : effectuer une copie de l'image avec decouper(...), parcourir chaque pixel (en excluant les bords), rassembler les 9 valeurs du voisinage pour chaque canal R, G, B, trier ces valeurs de façon simple et remplacer la valeur du pixel par la médiane. La copie est ensuite libérée avec libererImage(...).
 
-## 3) Placement 
-Fichier : src/fil.c  
-Fonction principale : `void filtreMedian(Image *img)`
+Contributions complémentaires :
+- Intégration de la commande correspondante dans main.c.
+- Rédaction de la documentation et des explications d'utilisation.
 
-## 4) Principe (simple)
-- Pour chaque pixel (sauf bords) : on prend un voisinage 3x3.  
-- On trie les 9 valeurs pour chaque canal R, G, B.  
-- On remplace la valeur par la médiane.
+Limites identifiées :
+- Les bords ne sont pas modifiés.
+- Tri simple peu optimisé (complexité élevée pour de grandes images).
+- Pas de vérification explicite que decouper retourne non-NULL avant usage dans certaines versions.
+- Conçu pour canaux 8 bits ; pas d'optimisation mémoire/temps.
 
-## 5) Détails d'implémentation
-- Utilise `decouper(...)` pour copier l'image avant traitement.  
-- Libère la copie avec `libererImage(...)`.  
-- Bords non modifiés (boucles de 1 à hauteur-2 / largeur-2).
-
-## 6) Utilisation rapide
-1. Charger une Image `img`.  
-2. Appeler `filtreMedian(img);`  
-3. Sauvegarder l'image modifiée.
-
-## 7) Limites
-- Noyau fixe 3x3.  
-- Tri simple (pas optimisé).  
-- Bords non traités.  
-- Conçu pour canaux 8 bits.
-
-## 8) Utilisation en application
-`ppmviewer> fil <nom_du_fichier_entrain> <nom_du_fichier_sortant>`
-
+Propositions d'amélioration :
+- Vérifier le résultat de decouper() et gérer les images trop petites.
+- Remplacer le tri par un algorithme adapté aux petites plages de valeurs (ex. counting sort pour 0..255).
+- Étudier l'application d'un traitement des bords ou l'extension miroir pour inclure les pixels bordures.
