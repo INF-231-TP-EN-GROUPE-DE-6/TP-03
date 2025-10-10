@@ -110,23 +110,4 @@ void ecrirePPM(const char *nomFichier, Image *img)
     fclose(f);
     printf(" Fichier %s créé avec succès.\n", nomFichier);
 }
-
-int main(int argc, char *argv[])
-{
-
-    if (argc != 3)
-    {
-        printf("Utilisation : %s <image_entree.ppm> <image_sortie.ppm>\n", argv[0]);
-        return 1;
-    }
-
-    Image *img = lirePPM(argv[1]);
-    if (img == NULL)
-        return 1;
-
-    passerEnGris(img);
-    ecrirePPM(argv[2], img);
-
-    printf(" L’image a été convertie en noir et blanc avec succès.\n");
-    return 0;
-}
+return0;
