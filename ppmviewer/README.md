@@ -127,7 +127,7 @@ ppmviewer > fil images/image1.ppm output/filtered_image1.ppm
 
 ```
 ppmviewer/
-├── docs
+├── docs/
 ├── images/
 │   ├── image1.ppm    # Image d'exemple 1
 │   └── image2.ppm    # Image d'exemple 2
