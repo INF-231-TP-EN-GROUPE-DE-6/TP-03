@@ -1,6 +1,6 @@
 ## Rapport Personnel - MONET YANKWA BELOVED BRYAN
 
-Dans ce TP, la fonction de découpage d'image (decouper) a été implémentée dans src/cut.c. Le rôle de la fonction est d'extraire une sous-image rectangulaire [l1..l2-1] x [c1..c2-1] depuis une image PPM source et de retourner une nouvelle Image allouée contenant uniquement cette zone.
+Dans ce TP, la fonction de découpage d'image (decouper) a été implémentée dans `src/cut.c`. Le rôle de la fonction est d'extraire une sous-image rectangulaire [l1..l2-1] x [c1..c2-1] depuis une image PPM source et de retourner une nouvelle Image allouée contenant uniquement cette zone.
 
 La méthode utilisée :
 - Validation des bornes d'entrée pour s'assurer qu'elles sont dans l'intervalle et correctement ordonnées. En cas d'erreur, la fonction signale "coordonnées invalides" et retourne NULL.
@@ -17,6 +17,5 @@ Limites identifiées :
 - Indices basés sur 0 ; l2 et c2 sont exclusifs dans la copie.
 - Nécessité pour l'appelant de libérer la sous-image pour éviter des fuites mémoires.
 
-Proposition d'amélioration :
-- Ajouter des vérifications des retours de malloc et gérer proprement les erreurs d'allocation.
-- Documenter clairement la convention d'indices (inclusif/exclusif) pour éviter les confusions.
+Utilisation : 
+- `cut <entrée.ppm> <l1> <l2> <c1> <c2> <sortie.ppm>`
